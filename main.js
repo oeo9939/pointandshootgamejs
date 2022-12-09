@@ -3,6 +3,10 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let timeToNextRaven = 0;
+let ravenInterval = 500;
+let lastTime = 0;
+
 let ravens = [];
 
 class Raven {
@@ -21,3 +25,17 @@ class Raven {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
+
+// const raven = new Raven(); Test class Raven
+
+function animate(timestamp) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // raven.update(); Test class Raven 
+    // raven.draw(); Test class Raven    
+    // console.log("test");
+    let deltatime = timestamp - lastTime;
+    lastTime = timestamp;
+    // console.log(timestamp);
+    requestAnimationFrame(animate);
+}
+animate();
