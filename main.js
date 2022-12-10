@@ -33,9 +33,14 @@ function animate(timestamp) {
     // raven.update(); Test class Raven 
     // raven.draw(); Test class Raven    
     // console.log("test");
-    let deltatime = timestamp - lastTime;
+    let deltaTime = timestamp - lastTime;
     lastTime = timestamp;
-    // console.log(timestamp);
+    timeToNextRaven += deltaTime;
+    if (timeToNextRaven > ravenInterval) {
+        ravens.push(new Raven());
+        timeToNextRaven = 0;
+    };
+    // console.log(deltaTime);
     requestAnimationFrame(animate);
 }
 animate();
