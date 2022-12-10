@@ -18,6 +18,10 @@ class Raven {
         this.directionX = Math.random() * 5 + 3;
         this.directionY = Math.random() * 5 - 2.5;
         this.markedForDeletion = false;
+        this.image = new Image();
+        this.image.src = "/assets/raven.png";
+        this.spriteWidth = 271;
+        this.spriteHeight = 194;
     }
     update() {
         this.x -= this.directionX;
@@ -25,6 +29,7 @@ class Raven {
     }
     draw() {
         ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
     }
 }
 
