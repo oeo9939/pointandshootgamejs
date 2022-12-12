@@ -36,7 +36,7 @@ class Raven {
         this.timeSinceFlap = 0;
         this.flapInterval = Math.random() * 50 + 50;
         this.randomColors = [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)];
-        this.color = "rgb()"
+        this.color = "rgb(" + this.randomColors[0] + "," + this.randomColors[1] + "," + this.randomColors[2] + ")";
     }
     update(deltaTime) {
         if (this.y < 0 || this.y > canvas.height - this.height) {
@@ -54,7 +54,8 @@ class Raven {
         // console.log(deltaTime);
     }
     draw() {
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image, this.spriteWidth * this.frame, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 }
