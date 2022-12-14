@@ -54,8 +54,8 @@ class Raven {
         // console.log(deltaTime);
     }
     draw() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        collisionCanvasctx.fillStyle = this.color;
+        collisionCanvasctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image, this.spriteWidth * this.frame, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 }
@@ -70,11 +70,19 @@ function drawScore() {
 
 window.addEventListener("click", (e) => {
     // console.log(e.x, e.y);
-    const detectPixelColor = ctx.getImageData(e.x, e.y, 1, 1);
+    const detectPixelColor = collisionCanvasctx.getImageData(e.x, e.y, 1, 1);
     console.log(detectPixelColor);
-})
+    const pc = detectPixelColor.data;
+    ravens.forEach(object => {
+        if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && object.randomColors[2] === pc[2]) {
+            object.markedForDeletion = true;
+            score++;
+        }
+    });
+});
 
 function animate(timestamp) {
+    collisionCanvasctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // raven.update(); Test class Raven 
     // raven.draw(); Test class Raven    
@@ -85,6 +93,9 @@ function animate(timestamp) {
     if (timeToNextRaven > ravenInterval) {
         ravens.push(new Raven());
         timeToNextRaven = 0;
+        ravens.sort((a, b) => {
+            return a.width - b.width;
+        })
     };
 
     drawScore();
