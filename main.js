@@ -72,8 +72,9 @@ class Explosions {
         this.y = y;
         this.frame = 0;
         this.sound = new Audio();
-        // this.randomSound = [Math.floor(Math.random() * 25)];
-        this.sound.src = "/assets/click3.ogg";
+        this.randomSound = [Math.ceil(Math.random() * 3)]; //2;
+        this.sound.src = `/assets/click${this.randomSound}.ogg`;
+        // this.sound.src = "/assets/click3.ogg";
         this.timeSinceLastFrame = 0;
         this.frameInterval = 200;
         this.markedForDeletion = false;
