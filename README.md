@@ -8,7 +8,9 @@ Project 5: Point & Shoot game
 Franks laboratory
 https://www.youtube.com/channel/UCEqc149iR-ALYkGM6TG-7vQ
 
-bevouliin.com
+Bevouliin.com
+
+OpenGameArt.org
 
 1) Pixel perfect collision detection using colors
 2) Timestamps and delta time
