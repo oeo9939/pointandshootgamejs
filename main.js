@@ -103,6 +103,15 @@ function drawScore() {
 }
 // const raven = new Raven(); Test class Raven
 
+function drawGameOver() {
+    ctx.textAlign = "center";
+    ctx.fillStyle = "black";
+    ctx.fillText("Game over your score is " + score, canvas.width / 2, canvas.height / 2);
+    ctx.textAlign = "center";
+    ctx.fillStyle = "white";
+    ctx.fillText("Game over your score is " + score, canvas.width / 2 + 2, canvas.height / 2 + 5);
+}
+
 window.addEventListener("click", (e) => {
     // console.log(e.x, e.y);
     const detectPixelColor = collisionCanvasctx.getImageData(e.x, e.y, 1, 1);
@@ -144,5 +153,6 @@ function animate(timestamp) {
     explosions = explosions.filter(object => !object.markedForDeletion);
     // console.log(ravens);
     if (!gameOver) requestAnimationFrame(animate);
+    else drawGameOver();
 }
 animate(0);
