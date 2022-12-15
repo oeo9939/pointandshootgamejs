@@ -9,6 +9,7 @@ collisionCanvas.width = window.innerWidth;
 collisionCanvas.height = window.innerHeight;
 
 let score = 0;
+let gameOver = false;
 ctx.font = "50px Impact";
 
 let timeToNextRaven = 0;
@@ -52,6 +53,7 @@ class Raven {
             this.timeSinceFlap = 0;
         }
         // console.log(deltaTime);
+        if (this.x < 0 - this.width) gameOver = true;
     }
     draw() {
         collisionCanvasctx.fillStyle = this.color;
@@ -84,11 +86,12 @@ class Explosions {
         this.timeSinceLastFrame += deltaTime;
         if (this.timeSinceLastFrame > this.frameInterval) {
             this.frame++;
+            this.timeSinceLastFrame = 0;
             if (this.frame > 5) this.markedForDeletion = true;
         }
     }
     draw() {
-        ctx.drawImage(this.image, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.size, this.size);
+        ctx.drawImage(this.image, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y - this.size / 4, this.size, this.size);
     }
 }
 
@@ -140,6 +143,6 @@ function animate(timestamp) {
     ravens = ravens.filter(object => !object.markedForDeletion);
     explosions = explosions.filter(object => !object.markedForDeletion);
     // console.log(ravens);
-    requestAnimationFrame(animate);
+    if (!gameOver) requestAnimationFrame(animate);
 }
 animate(0);
