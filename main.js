@@ -53,7 +53,9 @@ class Raven {
             else this.frame++;
             this.timeSinceFlap = 0;
             if (this.hasTrail) {
-                particles.push(new Particle(this.x, this.y, this.width, this.color));
+                for (let i = 0; i < 5; i++){
+                    particles.push(new Particle(this.x, this.y, this.width, this.color));
+                } 
             }
         }
         // console.log(deltaTime);
@@ -114,16 +116,18 @@ class Particle {
     }
     update() {
         this.x += this.speedX; 
-        this.radius += 0.5;
-        if (this.radius > this.maxRadius)
+        this.radius += 0.3;
+        if (this.radius > this.maxRadius - 5)
         this.markedForDeletion = true;
     }
     draw() {
+        ctx.save();
         ctx.globalAlpha = 1 - this.radius / this.maxRadius;
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
     }
 }
 
