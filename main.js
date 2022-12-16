@@ -51,6 +51,7 @@ class Raven {
             if (this.frame > this.maxFrame) this.frame = 0;
             else this.frame++;
             this.timeSinceFlap = 0;
+            particles.push(new Particle(this.x, this.y, this.width, this.color));
         }
         // console.log(deltaTime);
         if (this.x < 0 - this.width) gameOver = true;
@@ -99,16 +100,25 @@ let particles = [];
 
 class Particle {
     constructor (x, y, size, color) {
+        this.size = size;
         this.x = x;
         this.y = y;
         this.radius = Math.random() * this.size / 10;
         this.maxRadius = Math.random() * 20 + 35;
         this.markedForDeletion = false;
-        this.SpeedX = Math.random() * 1 + 0.5;
+        this.speedX = Math.random() * 1 + 0.5;
         this.color = color;
     }
     update() {
-        this.x += this.SpeedX; 
+        this.x += this.speedX; 
+        this.radius += 0.2;
+        if (this.radius > this.maxRadius)
+        this.markedForDeletion = true;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI)
     }
 }
 
@@ -164,10 +174,11 @@ function animate(timestamp) {
 
     drawScore();
 
-    [...ravens, ...explosions].forEach(object => object.update(deltaTime));
-    [...ravens, ...explosions].forEach(object => object.draw());
+    [...ravens, ...explosions, ...particles].forEach(object => object.update(deltaTime));
+    [...ravens, ...explosions, ...particles].forEach(object => object.draw());
     ravens = ravens.filter(object => !object.markedForDeletion);
     explosions = explosions.filter(object => !object.markedForDeletion);
+    particles = particles.filter(object => !object.markedForDeletion);
     // console.log(ravens);
     if (!gameOver) requestAnimationFrame(animate);
     else drawGameOver();
